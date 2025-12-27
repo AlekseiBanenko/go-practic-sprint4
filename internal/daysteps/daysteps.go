@@ -12,7 +12,7 @@ import (
 
 const (
 	// Длина одного шага в метрах
-	stepLength = 0.65
+	stepLength = 0.75
 	// Количество метров в одном километре
 	mInKm = 1000
 )
@@ -49,7 +49,7 @@ func DayActionInfo(data string, weight, height float64) string {
 		return ""
 	}
 
-	if steps == 0 {
+	if steps <= 0 {
 		return ""
 	}
 
