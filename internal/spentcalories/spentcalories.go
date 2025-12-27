@@ -12,7 +12,7 @@ import (
 const (
 	mInKm                      = 1000
 	minInH                     = 60
-	stepLengthCoefficient      = 0.75
+	stepLengthCoefficient      = 0.45
 	walkingCaloriesCoefficient = 0.5
 )
 
@@ -25,6 +25,11 @@ func parseTraining(data string) (int, string, time.Duration, error) {
 	steps, err := strconv.Atoi(parts[0])
 	if err != nil {
 		return 0, "", 0, fmt.Errorf("некорректное количество шагов: %w", err)
+	}
+
+	// ← ДОБАВИТЬ!
+	if steps <= 0 {
+		return 0, "", 0, errors.New("количество шагов должно быть больше 0")
 	}
 
 	duration, err := time.ParseDuration(parts[2])

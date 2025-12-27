@@ -12,13 +12,12 @@ import (
 
 const (
 	// Длина одного шага в метрах
-	stepLength = 0.75
+	stepLength = 0.65
 	// Количество метров в одном километре
 	mInKm = 1000
 )
 
 func parsePackage(data string) (int, time.Duration, error) {
-	// TODO: реализовать функцию
 	parts := strings.Split(data, ",")
 	if len(parts) != 2 {
 		return 0, 0, errors.New("некорректный формат данных")
@@ -38,25 +37,23 @@ func parsePackage(data string) (int, time.Duration, error) {
 		return 0, 0, fmt.Errorf("некорректная продолжительность: %w", err)
 	}
 
+	// ← ДОБАВИТЬ!
+	if duration <= 0 {
+		return 0, 0, errors.New("продолжительность прогулки должна быть больше 0")
+	}
+
 	return steps, duration, nil
 }
 
 func DayActionInfo(data string, weight, height float64) string {
-	// TODO: реализовать функцию
 	steps, duration, err := parsePackage(data)
 	if err != nil {
-		fmt.Println(err)
-		return ""
-	}
-
-	if steps <= 0 {
 		return ""
 	}
 
 	distance := float64(steps) * stepLength / mInKm
 	calories, err := spentcalories.WalkingSpentCalories(steps, weight, height, duration)
 	if err != nil {
-		fmt.Println(err)
 		return ""
 	}
 
